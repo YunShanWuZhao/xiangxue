@@ -24,7 +24,7 @@ public class MqConsumer2 {
         channel.queueBind(queueName, EXCHANGE_NAME, "");
         DeliverCallback callback = (consumerTag, delivery) ->{
             String msg = new String(delivery.getBody());
-            logger.info("mqCounsumer1 has received msg:{}", msg);
+            logger.info("mqCounsumer1 has received  msg:{}", msg);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
