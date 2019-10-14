@@ -1,0 +1,24 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/rabbit
+   http://www.springframework.org/schema/rabbit/spring-rabbit-1.5.xsd
+   http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-5.1.xsd">
+    <rabbit:connection-factory id="connectionFactory" host="47.102.223.168" port="5672" username="admin"
+                               password="admin"
+                               virtual-host="testHost"/>
+    <rabbit:template id="rabbitTemplate" connection-factory="connectionFactory"
+                     exchange="fanoutExchange"></rabbit:template>
+    <rabbit:queue name="testQueue" auto-declare="true"></rabbit:queue>
+    <rabbit:fanout-exchange name="fanoutExchange" auto-declare="true">
+        <rabbit:bindings>
+            <rabbit:binding queue="testQueue">
+            </rabbit:binding>
+        </rabbit:bindings>
+    </rabbit:fanout-exchange>
+    <rabbit:listener-container connection-factory="connectionFactory">
+        <rabbit:listener ref="mqConsumer1" method="listener" queue-names="testQueue"></rabbit:listener>
+    </rabbit:listener-container>
+    <bean id="mqConsumer1" class="com.xiangxue.demo.mq.MqConsumer1"></bean>
+    <rabbit:admin connection-factory="connectionFactory"></rabbit:admin>
+</beans>
