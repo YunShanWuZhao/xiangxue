@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiangxue.demo.mybatis.simple.mapper.UserMapper">
+    <select id="getUserAge" resultType="java.lang.Integer">
+        select age from user where id=#{id}
+    </select>
+
+    <select id="getUserName" resultType="java.lang.String">
+        select name from user where id = #{id}
+    </select>
+
+    <insert id="saveUser" parameterType="com.xiangxue.demo.mybatis.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into user (id,name,sex,age,ic_no) values(#{id}, #{name}, #{sex}, #{age}, #{icNo})
+    </insert>
+</mapper>
