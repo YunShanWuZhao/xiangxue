@@ -9,4 +9,6 @@ public interface UserMapper {
     String getUserName(Integer id);
 
     void saveUser(UserEntity userEntity);
+
+    void saveUser2(UserEntity userEntity);
 }

@@ -14,4 +14,11 @@
     <insert id="saveUser" parameterType="com.xiangxue.demo.mybatis.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
         insert into user (id,name,sex,age,ic_no) values(#{id}, #{name}, #{sex}, #{age}, #{icNo})
     </insert>
+
+    <insert id="saveUser2" parameterType="com.xiangxue.demo.mybatis.entity.UserEntity">
+        <selectKey keyProperty="id" order="AFTER" resultType="int">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into user (id,name,sex,age,ic_no) values(#{id}, #{name}, #{sex}, #{age}, #{icNo})
+    </insert>
 </mapper>

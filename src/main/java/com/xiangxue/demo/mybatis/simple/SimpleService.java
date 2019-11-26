@@ -34,7 +34,8 @@ public class SimpleService {
         userEntity.setName("罗叉叉");
         userEntity.setAge("1");
         userEntity.setIcNo("332526199312272316");
-        userMapper.saveUser(userEntity);
+        userMapper.saveUser2(userEntity);
+        sqlSession.commit();
         Integer id = userEntity.getId();
         logger.info("id:{}", id);
     }
