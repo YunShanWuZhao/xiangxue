@@ -3,6 +3,22 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiangxue.demo.mybatis.simple.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.xiangxue.demo.mybatis.entity.UserEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="ic_no" property="icNo"/>
+        <result column="password" property="password"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <sql id="base_column_list">
+        id,name,sex,age,ic_no,password,create_time,modify_time
+    </sql>
+
     <select id="getUserAge" resultType="java.lang.Integer">
         select age from user where id=#{id}
     </select>
@@ -11,7 +27,8 @@
         select name from user where id = #{id}
     </select>
 
-    <insert id="saveUser" parameterType="com.xiangxue.demo.mybatis.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
+    <insert id="saveUser" parameterType="com.xiangxue.demo.mybatis.entity.UserEntity" useGeneratedKeys="true"
+            keyProperty="id">
         insert into user (id,name,sex,age,ic_no) values(#{id}, #{name}, #{sex}, #{age}, #{icNo})
     </insert>
 
@@ -21,4 +38,14 @@
         </selectKey>
         insert into user (id,name,sex,age,ic_no) values(#{id}, #{name}, #{sex}, #{age}, #{icNo})
     </insert>
+
+    <insert id="saveUser3">
+        insert into user (id,name,sex,age,ic_no) value (#{id},#{name}, #{sex},#{age},#{icNo})
+    </insert>
+
+    <select id="getUser" parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="base_column_list"/>
+        from user where id = #{id}
+    </select>
 </mapper>
