@@ -3,6 +3,8 @@ package com.xiangxue.demo.mybatis.simple.mapper;
 import com.xiangxue.demo.mybatis.entity.UserEntity;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface UserMapper {
 
     Integer getUserAge(Integer id);
@@ -16,4 +18,6 @@ public interface UserMapper {
     void saveUser2(UserEntity userEntity);
 
     int saveUser3(@Param("id")Integer id,@Param("name")String name,@Param("age")String age,@Param("sex") String sex, @Param("icNo") String icNo);
+
+    int saveUser4(@Param("users") List<UserEntity> users);
 }

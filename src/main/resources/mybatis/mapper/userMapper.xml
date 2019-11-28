@@ -40,7 +40,14 @@
     </insert>
 
     <insert id="saveUser3">
-        insert into user (id,name,sex,age,ic_no) value (#{id},#{name}, #{sex},#{age},#{icNo})
+        insert into user (id,name,sex,age,ic_no) values (#{id},#{name}, #{sex},#{age},#{icNo})
+    </insert>
+
+    <insert id="saveUser4">
+        insert into user (name,sex,age,ic_no) values
+        <foreach collection="users" item="user" separator=",">
+            (#{user.name},#{user.sex},#{user.age},#{user.icNo})
+        </foreach>
     </insert>
 
     <select id="getUser" parameterType="Integer" resultMap="BaseResultMap">

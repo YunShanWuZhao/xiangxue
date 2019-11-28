@@ -18,7 +18,7 @@ public class MqProd {
     public static final String EXCHANGE_NAME = "testExchange1";
 
     public static void main(String[] args) throws IOException, TimeoutException {
-        String message = "小跳蛙ab";
+        String message = "小跳蛙";
         Connection connection = ConnectionUtil.getConn();
         Channel channel = connection.createChannel();
         channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
