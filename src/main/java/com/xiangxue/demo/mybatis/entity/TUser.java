@@ -2,12 +2,20 @@ package com.xiangxue.demo.mybatis.entity;
 
 import java.util.Date;
 
-public class UserEntity {
+public class TUser {
     private Integer id;
 
     private String name;
 
+    private String realName;
+
     private String sex;
+
+    private String mobile;
+
+    private String email;
+
+    private String note;
 
     private String age;
 
@@ -15,9 +23,12 @@ public class UserEntity {
 
     private String password;
 
+    private TPosition position;
+
     private Date createTime;
 
     private Date modifyTime;
+
 
     public Integer getId() {
         return id;
@@ -81,5 +92,13 @@ public class UserEntity {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public TPosition getPosition() {
+        return position;
+    }
+
+    public void setPosition(TPosition position) {
+        this.position = position;
     }
 }

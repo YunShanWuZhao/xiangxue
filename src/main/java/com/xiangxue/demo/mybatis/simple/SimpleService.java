@@ -1,6 +1,6 @@
 package com.xiangxue.demo.mybatis.simple;
 
-import com.xiangxue.demo.mybatis.entity.UserEntity;
+import com.xiangxue.demo.mybatis.entity.TUser;
 import com.xiangxue.demo.mybatis.simple.mapper.UserMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -30,13 +30,13 @@ public class SimpleService {
     public void saveUser() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        UserEntity userEntity = new UserEntity();
-        userEntity.setName("罗叉叉");
-        userEntity.setAge("1");
-        userEntity.setIcNo("332526199312272316");
-        userMapper.saveUser2(userEntity);
+        TUser TUser = new TUser();
+        TUser.setName("罗叉叉");
+        TUser.setAge("1");
+        TUser.setIcNo("332526199312272316");
+        userMapper.saveUser2(TUser);
         sqlSession.commit();
-        Integer id = userEntity.getId();
+        Integer id = TUser.getId();
         logger.info("id:{}", id);
     }
 

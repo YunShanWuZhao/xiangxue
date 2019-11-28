@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiangxue.demo.mybatis.simple.mapper.UserMapper">
 
-    <resultMap id="BaseResultMap" type="com.xiangxue.demo.mybatis.entity.UserEntity">
+    <resultMap id="BaseResultMap" type="com.xiangxue.demo.mybatis.entity.TUser">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="sex" property="sex"/>
@@ -14,6 +14,48 @@
         <result column="create_time" property="createTime"/>
         <result column="modify_time" property="modifyTime"/>
     </resultMap>
+
+    <resultMap id="UserAttributeMap" type="com.xiangxue.demo.mybatis.entity.TUser">
+        <id column="id" property="id"/>
+        <result column="userName" property="name"/>
+        <result column="realName" property="realName"/>
+        <result column="sex" property="sex"/>
+        <result column="mobile" property="mobile"/>
+        <result column="email" property="email"/>
+        <result column="note" property="note"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <association property="position" javaType="com.xiangxue.demo.mybatis.entity.TPosition" columnPrefix="post_" fetchType="lazy">
+            <id column="id" property="id"/>
+            <result column="name" property="postName"/>
+            <result column="note" property="note"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="UserAttributeMap2" type="com.xiangxue.demo.mybatis.entity.TUser">
+        <id column="id" property="id"/>
+        <result column="userName" property="name"/>
+        <result column="realName" property="realName"/>
+        <result column="sex" property="sex"/>
+        <result column="mobile" property="mobile"/>
+        <result column="email" property="email"/>
+        <result column="note" property="note"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <association column="position_id" property="position" javaType="com.xiangxue.demo.mybatis.entity.TPosition"
+                     select="selectPosition" fetchType="lazy">
+        </association>
+    </resultMap>
+
+    <resultMap id="base_position" type="com.xiangxue.demo.mybatis.entity.TPosition">
+        <id column="id" property="id"/>
+        <result column="post_name" property="postName"/>
+        <result column="note" property="note"/>
+    </resultMap>
+
+    <select id="selectPosition" resultMap="base_position">
+        select * from t_position where id=#{ids}
+    </select>
 
     <sql id="base_column_list">
         id,name,sex,age,ic_no,password,create_time,modify_time
@@ -27,12 +69,12 @@
         select name from user where id = #{id}
     </select>
 
-    <insert id="saveUser" parameterType="com.xiangxue.demo.mybatis.entity.UserEntity" useGeneratedKeys="true"
+    <insert id="saveUser" parameterType="com.xiangxue.demo.mybatis.entity.TUser" useGeneratedKeys="true"
             keyProperty="id">
         insert into user (id,name,sex,age,ic_no) values(#{id}, #{name}, #{sex}, #{age}, #{icNo})
     </insert>
 
-    <insert id="saveUser2" parameterType="com.xiangxue.demo.mybatis.entity.UserEntity">
+    <insert id="saveUser2" parameterType="com.xiangxue.demo.mybatis.entity.TUser">
         <selectKey keyProperty="id" order="AFTER" resultType="int">
             select LAST_INSERT_ID()
         </selectKey>
@@ -54,5 +96,18 @@
         select
         <include refid="base_column_list"/>
         from user where id = #{id}
+    </select>
+
+    <select id="queryUserAtribute" resultMap="UserAttributeMap">
+        select
+        a.id,a.userName,a.realName,a.sex,a.mobile,a.email,a.note,
+        b.id post_id,b.post_name post_name,b.note post_note
+        from t_user a,t_position b where a.position_id=b.id
+    </select>
+
+    <select id="queryUserAttribute2" resultMap="UserAttributeMap2">
+        select
+        a.id,a.userName,a.realName,a.sex,a.mobile,a.email,a.note,a.position_id
+        from t_user a
     </select>
 </mapper>

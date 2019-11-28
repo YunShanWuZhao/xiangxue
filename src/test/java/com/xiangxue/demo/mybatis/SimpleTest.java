@@ -1,6 +1,6 @@
 package com.xiangxue.demo.mybatis;
 
-import com.xiangxue.demo.mybatis.entity.UserEntity;
+import com.xiangxue.demo.mybatis.entity.TUser;
 import com.xiangxue.demo.mybatis.simple.mapper.UserMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -29,8 +29,8 @@ public class SimpleTest {
     public void testParamMap() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        UserEntity userEntity = userMapper.getUser(1);
-        System.out.println(userEntity);
+        TUser TUser = userMapper.getUser(1);
+        System.out.println(TUser);
     }
 
     @Test
@@ -45,29 +45,45 @@ public class SimpleTest {
 
     @Test
     public void testBatchInsert() {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setName("批量1");
-        userEntity.setSex("1");
-        userEntity.setAge("11");
-        userEntity.setIcNo("87435848367123");
-        UserEntity userEntity2 = new UserEntity();
-        userEntity2.setName("批量2");
-        userEntity2.setSex("1");
-        userEntity2.setAge("11");
-        userEntity2.setIcNo("87435848367124");
-        UserEntity userEntity3 = new UserEntity();
-        userEntity3.setName("批量3");
-        userEntity3.setSex("0");
-        userEntity3.setAge("11");
-        userEntity3.setIcNo("87435848367125");
-        List<UserEntity> userEntities = new ArrayList<>();
-        userEntities.add(userEntity);
-        userEntities.add(userEntity2);
-        userEntities.add(userEntity3);
+        TUser TUser = new TUser();
+        TUser.setName("批量1");
+        TUser.setSex("1");
+        TUser.setAge("11");
+        TUser.setIcNo("87435848367123");
+        TUser TUser2 = new TUser();
+        TUser2.setName("批量2");
+        TUser2.setSex("1");
+        TUser2.setAge("11");
+        TUser2.setIcNo("87435848367124");
+        TUser TUser3 = new TUser();
+        TUser3.setName("批量3");
+        TUser3.setSex("0");
+        TUser3.setAge("11");
+        TUser3.setIcNo("87435848367125");
+        List<TUser> userEntities = new ArrayList<>();
+        userEntities.add(TUser);
+        userEntities.add(TUser2);
+        userEntities.add(TUser3);
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         int count = userMapper.saveUser4(userEntities);
         System.out.println("count:" + count);
+    }
+
+    @Test
+    public void testAssociation(){
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        List<TUser> users = userMapper.queryUserAtribute(1);
+        System.out.println(users.get(0).getPosition());
+    }
+
+    @Test
+    public void testAssociationLazy(){
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        List<TUser> users = userMapper.queryUserAttribute2(2);
+        System.out.println(users.get(0).getPosition());
     }
 
 }
